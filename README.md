@@ -2,7 +2,7 @@
 
 This repo cantains the training code used during Visual Similarity research at [Fynd](https://www.fynd.com/). It also contains code to reproduce our state of the art models [MILDNet](https://arxiv.org/abs/1903.00905) and [Ranknet](https://arxiv.org/abs/1901.03546). 25 configs are present which constitutes configurations of most critical experiments by us.
 
-For more details, refer to the [Colab Notebook](https://colab.research.google.com/github/gofynd/mildnet/blob/master/MILDNet_on_Colab.ipynb) (**execute training on Free GPU provided by google in just 2 clicks**) or head to our research papers on Arxiv:
+For more details, refer to the [Colab Notebook](https://colab.research.google.com/github/gofynd/mildnet/blob/master/MILDNet_on_Colab.ipynb) (**execute training on Free GPUs or TPUs provided by google in just 2 clicks**) or head to our research papers on Arxiv:
 - [MILDNet: A Lightweight Single Scaled Deep Ranking Architecture](https://arxiv.org/abs/1903.00905)
 - [Retrieving Similar E-Commerce Images Using Deep Learning](https://arxiv.org/abs/1901.03546)
 
@@ -143,7 +143,7 @@ This project is licensed under the Apache License - see the [LICENSE.txt](LICENS
 ## Acknowledgments
 
 * All aspiring research works cited in our research paper
-* [Google Colaboratory](https://colab.research.google.com/) to provide free GPUs, helped us lot with experimentations and reporting.
+* [Google Colaboratory](https://colab.research.google.com/) to provide free GPUs/TPUs, helped us lot with experimentations and reporting.
 * [Annoy](https://github.com/spotify/annoy): Easy to use and fast Approximate Nearest Neighbour library.
 * [convnets-keras](https://github.com/heuritech/convnets-keras): Github repo contains Alexnet implementation on Keras, helped us to evaluate Alexnet base models as presented in [this](https://arxiv.org/abs/1404.4661) research work.
 * [image-similarity-deep-ranking](https://github.com/akarshzingade/image-similarity-deep-ranking): Github repo helped us to use triplet data in keras.
