@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+trainer/__pycache__
+.DS_Store
+trainer/.DS_Store
+.idea/
+dataset/
+output/

@@ -1,0 +1,9 @@
+model_id="mildnet_vgg16"
+loss="angular_loss_1"
+optimizer="mo"
+train_csv="tops_train_shuffle.csv"
+val_csv="tops_val_full.csv"
+train_epocs=6
+batch_size=16
+lr=0.001
+config=training_configs/cloudml-gpu.yaml
