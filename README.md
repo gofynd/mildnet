@@ -6,6 +6,8 @@ For more details, refer to the [Colab Notebook](https://colab.research.google.co
 - [MILDNet: A Lightweight Single Scaled Deep Ranking Architecture](https://arxiv.org/abs/1903.00905)
 - [Retrieving Similar E-Commerce Images Using Deep Learning](https://arxiv.org/abs/1901.03546)
 
+We have also open-sourced 8 of our top experiment results with weights [here](https://console.cloud.google.com/storage/browser/fynd-open-source/research/MILDNet/). To analyze and compare all the results head to [this Colab notebook](https://medium.com/r/?url=https%3A%2F%2Fcolab.research.google.com%2Fdrive%2F1u7mZCU6AYXATWVu-sc_xpzE4ZRtVoSt9). To get an idea on using the model to find n similar items using Annoy from a dataset head to [this Colab notebook](https://medium.com/r/?url=https%3A%2F%2Fcolab.research.google.com%2Fdrive%2F1j1pTFA2vNizQJeWPYgwoQYvXUMtdJ2-n). 
+
 ## Introduction
 Visual Recommendation is a crucial feature for any ecommerce platform. It gives the platform power of instantly suggesting similar looking products to what a user is browsing, thus capturing his/her immediate intent which could result in higher customer engagment (CTR) and hence the conversion.
 
@@ -102,7 +104,7 @@ Install requirements:
 Set below configs in settings.cfg:
 - MILDNET_JOB_DIR=gs://....
 - MILDNET_REGION=us-east1
-- MILDNET_DATA_PATH=gs://ml_shared_bucket/MILDNet/
+- MILDNET_DATA_PATH=gs://fynd-open-source/research/MILDNet/
 - HYPERDASH_KEY=your_hyperdash_key
 
 ## Run Training on Custom Job Config
@@ -119,7 +121,7 @@ Set below configs in settings.cfg:
     </code></pre>
 
 - Check tensorboard of ongoing training using:
-    <pre><code>tensorboard --logdir=gs://new_colab_bucket/DeepRanking/ml_engine_jobs/{{job_name}} --port=8080
+    <pre><code>tensorboard --logdir=gs://fynd-open-source/research/MILDNet/top_jobs/{{job_name}} --port=8080
     </code></pre>
     
 - Hyperdash: Either use [Hyperdash Website](https://hyperdash.io/dashboard/models) or [Android App](https://play.google.com/store/apps/details?id=com.hyperdash)/[iOS App](https://itunes.apple.com/us/app/hyperdash-machine-learning-monitoring/id1257582233) to monitor logs.

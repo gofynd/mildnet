@@ -496,7 +496,7 @@ def visnet_model():
 def alexnet():
     if not os.path.exists("alexnet_keras.zip"):
         print("Downloading Alexnet Keras Helpers")
-        with file_io.FileIO("gs://ml_shared_bucket/MILDNet/alexnet_keras.zip", mode='r') as alexnet_keras:
+        with file_io.FileIO("gs://fynd-open-source/research/MILDNet/alexnet_keras.zip", mode='r') as alexnet_keras:
             with file_io.FileIO("alexnet_keras.zip", mode='w+') as output_f:
                 output_f.write(alexnet_keras.read())
         dest_path = "/root/.local/lib/python2.7/site-packages/trainer"
