@@ -1,12 +1,14 @@
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/retrieving-similar-e-commerce-images-using/image-retrieval-street2shop-topwear)](https://paperswithcode.com/sota/image-retrieval-street2shop-topwear?p=retrieving-similar-e-commerce-images-using)     [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/mildnet-a-lightweight-single-scaled-deep/image-retrieval-street2shop-topwear)](https://paperswithcode.com/sota/image-retrieval-street2shop-topwear?p=mildnet-a-lightweight-single-scaled-deep)
+
 # MILDNet
 
-This repo cantains the training code used during Visual Similarity research at [Fynd](https://www.fynd.com/). It also contains code to reproduce our state of the art models [MILDNet](https://arxiv.org/abs/1903.00905) and [Ranknet](https://arxiv.org/abs/1901.03546). 25 configs are present which constitutes configurations of most critical experiments by us.
+This repo cantains the training code used during Visual Similarity research at [Fynd](https://www.fynd.com/). One can easily reproduce our state of the art models [MILDNet](https://arxiv.org/abs/1903.00905) and [Ranknet](https://arxiv.org/abs/1901.03546) and 2 other research works from the past. 25 configs are present which constitutes configurations of most critical experiments by us.
 
 For more details, refer to the **[Colab Notebook](https://colab.research.google.com/github/gofynd/mildnet/blob/master/MILDNet_on_Colab.ipynb) (execute training on Free GPUs or TPUs provided by Google in just 2 clicks)** or head to our research papers on Arxiv:
 - [MILDNet: A Lightweight Single Scaled Deep Ranking Architecture](https://arxiv.org/abs/1903.00905)
 - [Retrieving Similar E-Commerce Images Using Deep Learning](https://arxiv.org/abs/1901.03546)
 
-We have also open-sourced 8 of our top experiment results with weights [here](https://console.cloud.google.com/storage/browser/fynd-open-source/research/MILDNet/). To analyze and compare all the results head to [this Colab notebook](https://medium.com/r/?url=https%3A%2F%2Fcolab.research.google.com%2Fdrive%2F1u7mZCU6AYXATWVu-sc_xpzE4ZRtVoSt9). To get an idea on using the model to find n similar items using Annoy from a dataset head to [this Colab notebook](https://medium.com/r/?url=https%3A%2F%2Fcolab.research.google.com%2Fdrive%2F1j1pTFA2vNizQJeWPYgwoQYvXUMtdJ2-n). 
+We have also open-sourced 8 of our top experiment results with weights [here](https://console.cloud.google.com/storage/browser/fynd-open-source/research/MILDNet/). To analyze and compare all the results  (**training**) head to [this Colab notebook](https://colab.research.google.com/drive/1u7mZCU6AYXATWVu-sc_xpzE4ZRtVoSt9). To get an idea on using any of our open-sourced models models to find n similar items (**inferencing**) from your entire dataset head to [this Colab notebook](https://colab.research.google.com/drive/1j1pTFA2vNizQJeWPYgwoQYvXUMtdJ2-n). 
 
 ## Introduction
 Visual Recommendation is a crucial feature for any ecommerce platform. It gives the platform power of instantly suggesting similar looking products to what a user is browsing, thus capturing his/her immediate intent which could result in higher customer engagment (CTR) and hence the conversion.
