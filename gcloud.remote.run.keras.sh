@@ -10,6 +10,7 @@ gcloud ml-engine jobs submit training $2 \
 --package-path=trainer/ \
 --job-dir=$MILDNET_JOB_DIR$2 \
 --region=$MILDNET_REGION \
+--python-version 3.5 \
 --config=$config \
 -- \
 --data-path=$MILDNET_DATA_PATH \

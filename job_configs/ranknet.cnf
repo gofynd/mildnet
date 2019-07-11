@@ -1,4 +1,4 @@
-model_id="ranknet"
+model_id="ranknet_new"
 loss="contrastive_loss"
 optimizer="mo"
 train_csv="tops_train_shuffle.csv"

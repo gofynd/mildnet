@@ -54,26 +54,23 @@ def mildnet_without_skip_big():
 
 
 def mildnet_vgg16():
-  vgg_model = VGG16(weights="imagenet", include_top=False, input_shape=(224,224,3))
-  
+  vgg_model = VGG16(weights="imagenet", include_top=False, input_shape=(300,300,3))
+
   for layer in vgg_model.layers[:10]:
     layer.trainable = False
-  
+
   intermediate_layer_outputs = get_layers_output_by_name(vgg_model, ["block1_pool", "block2_pool", "block3_pool", "block4_pool"])
   convnet_output = GlobalAveragePooling2D()(vgg_model.output)
   for layer_name, output in intermediate_layer_outputs.items():
     output = GlobalAveragePooling2D()(output)
     convnet_output = concatenate([convnet_output, output])
-  
+
   convnet_output = Dense(2048, activation='relu')(convnet_output)
-  convnet_output = Dropout(0.6)(convnet_output)
+  convnet_output = Dropout(0.5)(convnet_output)
   convnet_output = Dense(2048, activation='relu')(convnet_output)
   convnet_output = Lambda(lambda  x: K.l2_normalize(x,axis=1))(convnet_output)
-    
-  first_input = Input(shape=(224,224,3))
-  second_input = Input(shape=(224,224,3))
 
-  final_model = tf.keras.models.Model(inputs=[first_input, second_input, vgg_model.input], outputs=convnet_output)
+  final_model = tf.keras.models.Model(inputs=vgg_model.input, outputs=convnet_output)
 
   return final_model
 
@@ -357,9 +354,9 @@ def ranknet():
     vgg_model = VGG19(weights="imagenet", include_top=False, input_shape=(224,224,3))
     convnet_output = GlobalAveragePooling2D()(vgg_model.output)
     convnet_output = Dense(4096, activation='relu')(convnet_output)
-    convnet_output = Dropout(0.5)(convnet_output)
-    convnet_output = Dense(4096, activation='relu')(convnet_output)
-    convnet_output = Dropout(0.5)(convnet_output)
+    # convnet_output = Dropout(0.5)(convnet_output)
+    convnet_output = Dense(2048, activation='relu')(convnet_output)
+    # convnet_output = Dropout(0.5)(convnet_output)
     convnet_output = Lambda(lambda  x: K.l2_normalize(x,axis=1))(convnet_output)
       
     s1_inp = Input(shape=(224,224,3))    
@@ -381,7 +378,7 @@ def ranknet():
     merge_one = concatenate([s1, s2])
     merge_one_norm = Lambda(lambda  x: K.l2_normalize(x,axis=1))(merge_one)
     merge_two = concatenate([merge_one_norm, convnet_output], axis=1)
-    emb = Dense(4096)(merge_two)
+    emb = Dense(2048)(merge_two)
     l2_norm_final = Lambda(lambda  x: K.l2_normalize(x,axis=1))(emb)
     
     final_model = tf.keras.models.Model(inputs=[s1_inp, s2_inp, vgg_model.input], outputs=l2_norm_final)

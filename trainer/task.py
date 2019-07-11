@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-needs_reproducible = True
+needs_reproducible = False
 if needs_reproducible:
   from numpy.random import seed
   seed(1)
@@ -19,7 +19,8 @@ import dill
 from hyperdash import Experiment
 from tensorflow.keras.callbacks import TensorBoard
 import logging
-
+from .datagen import ImageDataGenerator
+import time
 
 def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, batch_size, train_epocs, optimizer, is_tpu, lr, hyperdash_key, **args):
   logging.getLogger().setLevel(logging.INFO)
@@ -30,7 +31,7 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
   batch_size *= 3
   is_full_data = False
   hyperdash_capture_io = True
-
+  hyperdash_key = "x7oddZelOwaGJ56bVSU/IC61mXucai1Kgonn03vOf2U="
   # Setting up Hyperdash
   def get_api_key():
     return hyperdash_key
@@ -51,6 +52,11 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
 
   logging.info("Downloading Training Image from path {}".format(data_path))
   downloads_training_images(data_path, is_cropped=("_cropped" in job_dir))
+
+  with file_io.FileIO("gs://ml_shared_bucket/mildnet_v2/pre_tr_mildnet_2048.h5",
+                      mode='rb') as input_f:
+    with file_io.FileIO("pre_tr_mildnet.h5", mode='w+') as output_f:
+      output_f.write(input_f.read())
 
   logging.info("Building Model: {}".format(model_id))
   if model_id in globals():
@@ -77,20 +83,45 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
     "rescale": 1. / 255,
     "horizontal_flip": True,
     "vertical_flip": True,
-    "zoom_range": 0.2,
+    "zoom_range": 0.1,
     "shear_range": 0.2,
     "rotation_range": 30,
     "fill_mode": 'nearest'
   }, data_path, train_csv, val_csv, target_size=(img_width, img_height))
 
-  train_generator = dg.get_train_generator(batch_size, is_full_data)
-  test_generator = dg.get_test_generator(batch_size)
+  dg.get_train_generator(batch_size, is_full_data)
+  dg.get_test_generator(batch_size)
 
-  if weights_path:
-    with file_io.FileIO(weights_path, mode='r') as input_f:
-        with file_io.FileIO("weights.h5", mode='w+') as output_f:
-            output_f.write(input_f.read())
-    model.load_weights("weights.h5")
+  embedding_size = 2048
+  train_generator = ImageDataGenerator(data_path="dataset/tops/",
+                                 triplets_csv="dataset/"+train_csv,
+                                 target_size=[img_width,img_width],
+                                 batch_size=batch_size,
+                                 num_batch_samples=batch_size,
+                                 embedding_size=embedding_size,
+                                 shuffle=True,
+                                 augment=True,
+                                 rotation_range=30,
+                                 zoom_range=0.1,
+                                 shear_range=0.2,
+                                 vertical_flip=False,
+                                 horizontal_flip=True,
+                                 height_shift_range=0.1,
+                                 width_shift_range=0.1)
+
+  # val sequences generator
+  test_generator = ImageDataGenerator(data_path="dataset/tops/",
+                               triplets_csv="dataset/"+val_csv,
+                               target_size=[img_width,img_width],
+                               batch_size=batch_size,
+                               embedding_size=embedding_size)
+
+  # if weights_path:
+  #   with file_io.FileIO(weights_path, mode='r') as input_f:
+  #       with file_io.FileIO("weights.h5", mode='w+') as output_f:
+  #           output_f.write(input_f.read())
+  #   model.load_weights("weights.h5")
+  model.load_weights("pre_tr_mildnet.h5")
 
   # model = multi_gpu_model(model, gpus=4)
   if optimizer=="mo":
@@ -130,10 +161,9 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
     )
 
   history = model.fit_generator(train_generator,
-                                steps_per_epoch=(train_generator.n//(train_generator.batch_size)),
                                 validation_data=test_generator,
                                 epochs=train_epocs,
-                                validation_steps=(test_generator.n//(test_generator.batch_size)),
+                                max_queue_size=16,
                                 callbacks=callbacks)
 
   pd.DataFrame(history.history).to_csv("output/history.csv")
