@@ -79,18 +79,7 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
     exp.param("trainable_count", trainable_count)
     exp.param("non_trainable_count", non_trainable_count)
 
-  dg = DataGenerator({
-    "rescale": 1. / 255,
-    "horizontal_flip": True,
-    "vertical_flip": True,
-    "zoom_range": 0.1,
-    "shear_range": 0.2,
-    "rotation_range": 30,
-    "fill_mode": 'nearest'
-  }, data_path, train_csv, val_csv, target_size=(img_width, img_height))
-
-  dg.get_train_generator(batch_size, is_full_data)
-  dg.get_test_generator(batch_size)
+  get_train_test_csv(data_path, train_csv, val_csv, is_full_data)
 
   embedding_size = 2048
   train_generator = ImageDataGenerator(data_path="dataset/tops/",
