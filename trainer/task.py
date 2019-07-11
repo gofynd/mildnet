@@ -105,11 +105,6 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
                                batch_size=batch_size,
                                embedding_size=embedding_size)
 
-  # if weights_path:
-  #   with file_io.FileIO(weights_path, mode='r') as input_f:
-  #       with file_io.FileIO("weights.h5", mode='w+') as output_f:
-  #           output_f.write(input_f.read())
-  #   model.load_weights("weights.h5")
   model.load_weights("pre_tr_mildnet.h5")
 
   # model = multi_gpu_model(model, gpus=4)
