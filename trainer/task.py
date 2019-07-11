@@ -31,7 +31,7 @@ def main(job_dir, data_path, model_id, weights_path, loss, train_csv, val_csv, b
   batch_size *= 3
   is_full_data = False
   hyperdash_capture_io = True
-  hyperdash_key = "x7oddZelOwaGJ56bVSU/IC61mXucai1Kgonn03vOf2U="
+
   # Setting up Hyperdash
   def get_api_key():
     return hyperdash_key
