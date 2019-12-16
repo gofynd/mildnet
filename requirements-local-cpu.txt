@@ -1,5 +1,5 @@
 numpy==1.16.2
-tensorflow==1.10.0
+tensorflow==1.15.0
 hyperdash==0.15.3
 scipy==1.1.0
 pandas==0.22.0
